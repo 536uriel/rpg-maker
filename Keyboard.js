@@ -1,3 +1,5 @@
+import { intersection } from "./collision.js";
+
 export default class keyboard {
 
     constructor() {
@@ -20,7 +22,7 @@ export default class keyboard {
         })
     }
 
-    static set_player(keyboard, entity) {
+    static set_player(keyboard, entity, board) {
         //right
         keyboard.addKey(68, function (state) {
             if (state == 'keydown') {
@@ -30,12 +32,21 @@ export default class keyboard {
             }
         })
 
+        entity.jump = false;
         //up
         keyboard.addKey(87, function (state) {
-            if (state == 'keydown') {
-                entity.velocity.y = -5
+            if (entity.gravity == 0) {
+                if (state == 'keydown') {
+                    entity.velocity.y = -5
+                } else {
+                    entity.velocity.y = 0
+                }
             } else {
-                entity.velocity.y = 0
+                if (state == 'keydown' && !entity.jump) {
+                    entity.velocity.y = -5;
+                    entity.jump = true;
+                }
+
             }
         })
 
@@ -70,10 +81,18 @@ export default class keyboard {
 
         //up
         keyboard.addKey(38, function (state) {
-            if (state == 'keydown') {
-                entity.velocity.y = -5
+            if (entity.gravity == 0) {
+                if (state == 'keydown') {
+                    entity.velocity.y = -5
+                } else {
+                    entity.velocity.y = 0
+                }
             } else {
-                entity.velocity.y = 0
+                if (state == 'keydown' && !entity.jump) {
+                    entity.velocity.y = -5;
+                    entity.jump = true;
+                }
+
             }
         })
 
@@ -89,7 +108,7 @@ export default class keyboard {
         //down
         keyboard.addKey(40, function (state) {
             if (state == 'keydown') {
-                
+
                 entity.velocity.y = 5
             } else {
                 entity.velocity.y = 0

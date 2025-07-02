@@ -17,11 +17,11 @@ export function intersection(subject, obstacles, fn) {
 
 
 export function stopMoveWhenCollide(subject, obstacles, x, y, camera, canvas) {
-    
- 
+
+
     subject.pos.x += x
-   
-    
+
+
 
     //if subject move to right
     if (x > 0) {
@@ -30,14 +30,14 @@ export function stopMoveWhenCollide(subject, obstacles, x, y, camera, canvas) {
 
 
             if (subject.rp > obstacle.lp) {
-                
+
                 subject.rp = obstacle.lp;
             }
         });
     } else if (x < 0) {
         intersection(subject, obstacles, obstacle => {
             if (subject.lp < obstacle.rp) {
-                
+
                 subject.lp = obstacle.rp;
             }
         });
@@ -45,14 +45,15 @@ export function stopMoveWhenCollide(subject, obstacles, x, y, camera, canvas) {
 
 
     subject.pos.y += y
-    
+
 
 
     if (y > 0) {
         intersection(subject, obstacles, obstacle => {
             if (subject.bp > obstacle.tp) {
-                
+
                 subject.bp = obstacle.tp;
+                subject.jump = false;
             }
         });
     } else if (y < 0) {

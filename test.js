@@ -75,7 +75,8 @@ editor2.setSize((cwidth / 2) - 30, 200);
 
 
 var commands = [
-    "rect(x, y)"
+    "rect(x, y)",
+    "player.gravity = 3"
 ]
 
 var clist = document.getElementById("commands");
@@ -86,7 +87,7 @@ commands.forEach(command => {
     li.innerText = command;
 
     li.addEventListener("click", () => {
-        editor2.setValue(editor2.getValue() + "\n" + command);
+        editor1.setValue(editor1.getValue() + "\n" + command);
     })
 
     clist.appendChild(li)
@@ -102,7 +103,7 @@ commands.forEach(command => {
     a.id = "commends-drop-a"
 
     a.addEventListener("click", () => {
-        editor2.setValue(editor2.getValue() + "\n" + command);
+        editor1.setValue(editor1.getValue() + "\n" + command);
     })
 
     alist.appendChild(a);
@@ -150,6 +151,7 @@ function runCode() {
         */
         callback = () => {
             //for execute p5 code
+
             new Function(code)();
         }
 
@@ -180,12 +182,16 @@ sprite.set_sprites().then(() => {
     var ground_sprite = sprite.sprites.get('ground');
 
 
+
     var player = new Rect(camera.x, camera.y, 50, 50, sprite.sprites.get('player-run-4'), camera);
     player.velocity = { x: 0, y: 0 };
     player.pos = { x: 200, y: 200 };
+    player.gravity = 0;
+
+    window.player = player;
 
     //set player input movement
-    Keyboard.set_player(keyboard, player);
+    Keyboard.set_player(keyboard, player, board);
 
 
     var rects = [
@@ -234,15 +240,20 @@ sprite.set_sprites().then(() => {
 
         drawBackground(ctx)
 
+        player.velocity.y += player.gravity / 60;
+
         stopMoveWhenCollide(player, board.getAllSubjectsFromGrid(), player.velocity.x, player.velocity.y, camera, canvas)
 
 
         player.draw_preciclly_sprite(ctx, sprite.getSpriteAnimation('player-run-', player, 10, 4))
 
         div_show_mouse.innerText = "x: " + player.pos.x + ", y: " + player.pos.y;
+
+        callback()
     }
 
     timer.start()
+
 
 });
 
