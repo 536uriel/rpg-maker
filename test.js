@@ -1,3 +1,5 @@
+
+import SITE_URL from "./production-config.js";
 import Timer from "./timer.js";
 import Rect from "./Rect.js";
 import Keyboard from "./Keyboard.js";
@@ -40,6 +42,8 @@ var cheight = Math.max(body.scrollHeight, body.offsetHeight,
     html.clientHeight, html.scrollHeight, html.offsetHeight);
 
 var callback = () => { };
+
+document.getElementById("btns-img").src = SITE_URL + "/assets/wasd-btns.jpeg"
 
 
 //default rect size

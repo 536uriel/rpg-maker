@@ -1,3 +1,5 @@
+import SITE_URL from "./production-config.js";
+
 export function load_image(w, h, src) {
     let img = new Image(w, h)
     return new Promise((res, rej) => {
@@ -29,17 +31,17 @@ export class Sprite {
     }
 
     async set_ground_sprite() {
-        const can_img = await this.loadSprite('/assets/sprites.png', 3, 1, this.size_w, this.size_h);
+        const can_img = await this.loadSprite(SITE_URL + '/assets/sprites.png', 3, 1, this.size_w, this.size_h);
         this.sprites.set('ground', can_img);
     }
 
     async set_grass_sprite(){
-        const can_img = await this.loadSprite('/assets/sprites.png', 0, 2, this.size_w, this.size_h);
+        const can_img = await this.loadSprite(SITE_URL + '/assets/sprites.png', 0, 2, this.size_w, this.size_h);
         this.sprites.set('grass', can_img);
     }
 
     async set_sword_sprite(){
-        const sword_img =  await this.loadSprite("/assets/wepons_16.png",0,21,this.size_w,this.size_h);
+        const sword_img =  await this.loadSprite(SITE_URL + "/assets/wepons_16.png",0,21,this.size_w,this.size_h);
         this.sprites.set("sword", sword_img);
     }
 
@@ -47,16 +49,16 @@ export class Sprite {
     async set_player_sprites(){
         //tile size..
         let tsize = 8 
-        const player_run_1 = await this.loadSprite_preciclly('/assets/spr_run_strip8.png',
+        const player_run_1 = await this.loadSprite_preciclly(SITE_URL + '/assets/spr_run_strip8.png',
         5 * tsize - 1, 3 * tsize - 1, tsize * 2 + 2, tsize * 2);
         
-        const player_run_2 = await this.loadSprite_preciclly('/assets/spr_run_strip8.png',
+        const player_run_2 = await this.loadSprite_preciclly(SITE_URL + '/assets/spr_run_strip8.png',
             17 * tsize - 1, 3 * tsize - 1, tsize * 2 + 2, tsize * 2);
         
-        const player_run_3 = await this.loadSprite_preciclly('/assets/spr_run_strip8.png',
+        const player_run_3 = await this.loadSprite_preciclly(SITE_URL + '/assets/spr_run_strip8.png',
             29 * tsize - 1, 3 * tsize - 1, tsize * 2 + 2, tsize * 2);
     
-        const player_run_4 = await this.loadSprite_preciclly('/assets/spr_run_strip8.png',
+        const player_run_4 = await this.loadSprite_preciclly(SITE_URL + '/assets/spr_run_strip8.png',
             41 * tsize, 3 * tsize - 3, tsize * 2, tsize * 2);
             
 
