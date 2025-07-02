@@ -26,8 +26,7 @@ export class Sprite {
         await this.set_ground_sprite();
         await this.set_grass_sprite();
         await this.set_player_sprites();
-        await this.set_sword_sprite();
-        await this.set_enemy_sprites();
+     
     }
 
     async set_ground_sprite() {
