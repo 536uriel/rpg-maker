@@ -71,16 +71,16 @@ export class Sprite {
     async set_enemy_sprites(){
                //tile size..
                let tsize = 8 
-               const enemy_run_1 = await this.loadSprite_preciclly('/assets/skeleton_walk_strip8.png',
+               const enemy_run_1 = await this.loadSprite_preciclly(SITE_URL + '/assets/skeleton_walk_strip8.png',
                5 * tsize - 1, 3 * tsize - 1, tsize * 2 + 2, tsize * 2);
                
-               const enemy_run_2 = await this.loadSprite_preciclly('/assets/skeleton_walk_strip8.png',
+               const enemy_run_2 = await this.loadSprite_preciclly(SITE_URL + '/assets/skeleton_walk_strip8.png',
                    17 * tsize - 1, 3 * tsize - 1, tsize * 2 + 2, tsize * 2);
                
-               const enemy_run_3 = await this.loadSprite_preciclly('/assets/skeleton_walk_strip8.png',
+               const enemy_run_3 = await this.loadSprite_preciclly(SITE_URL + '/assets/skeleton_walk_strip8.png',
                    29 * tsize - 1, 3 * tsize - 1, tsize * 2 + 2, tsize * 2);
            
-               const enemy_run_4 = await this.loadSprite_preciclly('/assets/skeleton_walk_strip8.png',
+               const enemy_run_4 = await this.loadSprite_preciclly(SITE_URL + '/assets/skeleton_walk_strip8.png',
                    41 * tsize, 3 * tsize - 3, tsize * 2, tsize * 2);
                    
        
