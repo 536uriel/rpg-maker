@@ -76,7 +76,9 @@ editor2.setSize((cwidth / 2) - 30, 200);
 
 var commands = [
     "rect(x, y)",
-    "player.gravity = 3"
+    "player.gravity = 3",
+    "player.pos.x = 200",
+    "player.pos.y = 200"
 ]
 
 var clist = document.getElementById("commands");
