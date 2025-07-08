@@ -15,12 +15,12 @@ export function intersection(subject, obstacles, fn) {
 }
 
 
-
-export function stopMoveWhenCollide(subject, obstacles, x, y, camera, canvas) {
+export function stopMoveWhenCollide(subject, obstacles, x, y, camera, canvas, sprite) {
 
 
     subject.pos.x += x
 
+    const water = sprite.sprites.get('water');
 
 
     //if subject move to right
@@ -28,18 +28,25 @@ export function stopMoveWhenCollide(subject, obstacles, x, y, camera, canvas) {
 
         intersection(subject, obstacles, obstacle => {
 
-
             if (subject.rp > obstacle.lp) {
-
-                subject.rp = obstacle.lp;
+                //תקן לסוף השמאל
+                if (obstacle.sprite != water) {
+                    subject.rp = obstacle.lp;
+                } 
             }
+
+
+
         });
     } else if (x < 0) {
         intersection(subject, obstacles, obstacle => {
             if (subject.lp < obstacle.rp) {
-
-                subject.lp = obstacle.rp;
+                //תקן לסוף הימין
+                if (obstacle.sprite != water) {
+                    subject.lp = obstacle.rp;
+                }
             }
+
         });
     }
 
@@ -51,16 +58,23 @@ export function stopMoveWhenCollide(subject, obstacles, x, y, camera, canvas) {
     if (y > 0) {
         intersection(subject, obstacles, obstacle => {
             if (subject.bp > obstacle.tp) {
-
-                subject.bp = obstacle.tp;
-                subject.jump = false;
+                //תקן לסוף הלמעלה
+                if (obstacle.sprite != water) {
+                    subject.bp = obstacle.tp;
+                    subject.jump = false;
+                }
             }
+
         });
     } else if (y < 0) {
         intersection(subject, obstacles, obstacle => {
             if (subject.tp < obstacle.bp) {
-                subject.tp = obstacle.bp;
+                //תקן לסוף הלמטה
+                if (obstacle.sprite != water) {
+                    subject.tp = obstacle.bp;
+                }
             }
+
         });
     }
 

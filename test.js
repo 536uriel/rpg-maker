@@ -179,15 +179,20 @@ var mousePos = { x: 0, y: 0 }
 var timer = new Timer();
 var keyboard = new Keyboard();
 var costume = 2;
+
+var ground_sprite;
+var grass_sprite;
+var water_sprite;
+
 var squere_sprite;
 
 
 
 sprite.set_sprites().then(() => {
 
-    var ground_sprite = sprite.sprites.get('ground');
-    var grass_sprite = sprite.sprites.get('grass');
-    var water_sprite = sprite.sprites.get('water');
+    ground_sprite = sprite.sprites.get('ground');
+    grass_sprite = sprite.sprites.get('grass');
+    water_sprite = sprite.sprites.get('water');
 
     squere_sprite = ground_sprite;
 
@@ -197,6 +202,9 @@ sprite.set_sprites().then(() => {
     player.velocity = { x: 0, y: 0 };
     player.pos = { x: 200, y: 200 };
     player.gravity = 0;
+    
+    //!?is usable?
+    player.slower = 0;
 
     window.player = player;
 
@@ -280,7 +288,8 @@ sprite.set_sprites().then(() => {
 
         player.velocity.y += player.gravity / 60;
 
-        stopMoveWhenCollide(player, board.getAllSubjectsFromGrid(), player.velocity.x, player.velocity.y, camera, canvas)
+        stopMoveWhenCollide(player, board.getAllSubjectsFromGrid(), player.velocity.x, player.velocity.y, camera, canvas, sprite);
+
 
 
         player.draw_preciclly_sprite(ctx, sprite.getSpriteAnimation(costume + 'player-run-', player, 10, 4))
