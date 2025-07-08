@@ -1,6 +1,6 @@
 var SITE_URL = "";
 
-var isProd = false;
+var isProd = true;
 
 
 if(isProd){
