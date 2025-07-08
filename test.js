@@ -77,6 +77,7 @@ editor2.setSize((cwidth / 2) - 30, 200);
 var commands = [
     "rect(x, y)",
     "player.gravity = 3",
+    "nextCustume()",
     "player.pos.x = 200",
     "player.pos.y = 200"
 ]
@@ -174,8 +175,9 @@ document.getElementById("clean-btn").addEventListener("click", cleanCode);
 
 
 var mousePos = { x: 0, y: 0 }
-var timer = new Timer()
-var keyboard = new Keyboard()
+var timer = new Timer();
+var keyboard = new Keyboard();
+var costume = 2;
 
 
 
@@ -219,6 +221,14 @@ sprite.set_sprites().then(() => {
 
     });
 
+    window.nextCustume = function nextCustume(){
+        if(costume == 2){
+            costume = 1;
+        }else{
+            costume = 2;
+        }
+    }
+
     window.rect = function rect(x, y) {
         console.log("run rect")
         x = Math.round(x / rectW);
@@ -247,7 +257,7 @@ sprite.set_sprites().then(() => {
         stopMoveWhenCollide(player, board.getAllSubjectsFromGrid(), player.velocity.x, player.velocity.y, camera, canvas)
 
 
-        player.draw_preciclly_sprite(ctx, sprite.getSpriteAnimation('player-run-', player, 10, 4))
+        player.draw_preciclly_sprite(ctx, sprite.getSpriteAnimation(costume + 'player-run-', player, 10, 4))
 
         div_show_mouse.innerText = "x: " + player.pos.x + ", y: " + player.pos.y;
 

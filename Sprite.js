@@ -25,8 +25,19 @@ export class Sprite {
     async set_sprites() {
         await this.set_ground_sprite();
         await this.set_grass_sprite();
-        await this.set_player_sprites();
-     
+        try {
+            await this.set_player_sprites();
+
+        } catch (error) {
+            console.log(err);
+        }
+        try {
+            await this.set_player_sprites2();
+
+        } catch (err) {
+            console.log(err);
+        }
+
     }
 
     async set_ground_sprite() {
@@ -34,67 +45,91 @@ export class Sprite {
         this.sprites.set('ground', can_img);
     }
 
-    async set_grass_sprite(){
+    async set_grass_sprite() {
         const can_img = await this.loadSprite(SITE_URL + '/assets/sprites.png', 0, 2, this.size_w, this.size_h);
         this.sprites.set('grass', can_img);
     }
 
-    async set_sword_sprite(){
-        const sword_img =  await this.loadSprite(SITE_URL + "/assets/wepons_16.png",0,21,this.size_w,this.size_h);
+    async set_sword_sprite() {
+        const sword_img = await this.loadSprite(SITE_URL + "/assets/wepons_16.png", 0, 21, this.size_w, this.size_h);
         this.sprites.set("sword", sword_img);
     }
 
 
-    async set_player_sprites(){
+    async set_player_sprites() {
         //tile size..
-        let tsize = 8 
+        let tsize = 8
         const player_run_1 = await this.loadSprite_preciclly(SITE_URL + '/assets/spr_run_strip8.png',
-        5 * tsize - 1, 3 * tsize - 1, tsize * 2 + 2, tsize * 2);
-        
+            5 * tsize - 1, 3 * tsize - 1, tsize * 2 + 2, tsize * 2);
+
         const player_run_2 = await this.loadSprite_preciclly(SITE_URL + '/assets/spr_run_strip8.png',
             17 * tsize - 1, 3 * tsize - 1, tsize * 2 + 2, tsize * 2);
-        
+
         const player_run_3 = await this.loadSprite_preciclly(SITE_URL + '/assets/spr_run_strip8.png',
             29 * tsize - 1, 3 * tsize - 1, tsize * 2 + 2, tsize * 2);
-    
+
         const player_run_4 = await this.loadSprite_preciclly(SITE_URL + '/assets/spr_run_strip8.png',
             41 * tsize, 3 * tsize - 3, tsize * 2, tsize * 2);
-            
 
-        this.sprites.set('player-run-1', player_run_1);
-        this.sprites.set('player-run-2', player_run_2);
-        this.sprites.set('player-run-3', player_run_3);
-        this.sprites.set('player-run-4', player_run_4);
+
+        this.sprites.set('1player-run-1', player_run_1);
+        this.sprites.set('1player-run-2', player_run_2);
+        this.sprites.set('1player-run-3', player_run_3);
+        this.sprites.set('1player-run-4', player_run_4);
+    }
+
+
+    async set_player_sprites2() {
+        //tile size..
+        let tsize = 16
+        const space_between = tsize * 30;
+        const player_run_1 = await this.loadSprite_preciclly(SITE_URL + '/assets/—Pngtree—sprite sheet of the flash_5268150.png',
+            20 * tsize, 15 * tsize, tsize * 42, tsize * 42);
+
+        const player_run_2 = await this.loadSprite_preciclly(SITE_URL + '/assets/—Pngtree—sprite sheet of the flash_5268150.png',
+            space_between + (tsize * 42), 15 * tsize, tsize * 42, tsize * 50);
+
+        const player_run_3 = await this.loadSprite_preciclly(SITE_URL + '/assets/—Pngtree—sprite sheet of the flash_5268150.png',
+            space_between * 2 + (tsize * 42) * 1.5, 15 * tsize, tsize * 42, tsize * 48);
+
+        const player_run_4 = await this.loadSprite_preciclly(SITE_URL + '/assets/—Pngtree—sprite sheet of the flash_5268150.png',
+            20 * tsize, 25 * tsize + (tsize * 42), tsize * 42, tsize * 46);
+
+
+        this.sprites.set('2player-run-1', player_run_1);
+        this.sprites.set('2player-run-2', player_run_2);
+        this.sprites.set('2player-run-3', player_run_3);
+        this.sprites.set('2player-run-4', player_run_4);
     }
 
 
     //$this func is mainly for outer class
     drawSprite(ctx, sprite_name, tile_x, tile_y) {
         ctx.drawImage(this.sprites.get(sprite_name), tile_x * this.tile_size_w, tile_y * this.tile_size_h,
-        this.size_w, this.size_h);
+            this.size_w, this.size_h);
     }
-  
+
     //$this func is mainly for outer class
-    getSpriteAnimation(characterStr ,subject, frame_dist, frames_len){
+    getSpriteAnimation(characterStr, subject, frame_dist, frames_len) {
 
         //return sprite by frame and distance of subject
-        function routeFrames(characterStr ,sprites, distance, frame_dist, frames_len){
+        function routeFrames(characterStr, sprites, distance, frame_dist, frames_len) {
             let frame = characterStr + Math.floor((distance / frame_dist) % frames_len + 1);
-       
-            
-            if(subject.x <= 0 || subject.y <= 0){
+
+
+            if (subject.x <= 0 || subject.y <= 0) {
                 frame = characterStr + 1;
             }
-    
+
             let sprite = new Sprite();
-            sprite =  sprites.get(frame);
+            sprite = sprites.get(frame);
             return sprite;
         }
 
         //route the frames acording to pos sidtance (and not the actual dist on canvas)
         let dist = Math.abs(subject.pos.x)
 
-        return routeFrames(characterStr ,this.sprites, dist, frame_dist, frames_len);
+        return routeFrames(characterStr, this.sprites, dist, frame_dist, frames_len);
     }
 
     loadSprite_preciclly(src, cut_from_x, cut_from_y,
