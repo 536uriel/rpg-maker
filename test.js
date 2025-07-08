@@ -78,6 +78,7 @@ var commands = [
     "rect(x, y)",
     "player.gravity = 3",
     "nextCustume()",
+    "nextBlock()",
     "player.pos.x = 200",
     "player.pos.y = 200"
 ]
@@ -178,12 +179,17 @@ var mousePos = { x: 0, y: 0 }
 var timer = new Timer();
 var keyboard = new Keyboard();
 var costume = 2;
+var squere_sprite;
 
 
 
 sprite.set_sprites().then(() => {
 
     var ground_sprite = sprite.sprites.get('ground');
+    var grass_sprite = sprite.sprites.get('grass');
+    var water_sprite = sprite.sprites.get('water');
+
+    squere_sprite = ground_sprite;
 
 
 
@@ -221,11 +227,31 @@ sprite.set_sprites().then(() => {
 
     });
 
-    window.nextCustume = function nextCustume(){
-        if(costume == 2){
+    window.nextCustume = function nextCustume() {
+        if (costume == 2) {
             costume = 1;
-        }else{
+        } else {
             costume = 2;
+        }
+    }
+
+    window.nextBlock = function nextBlock() {
+        switch (squere_sprite) {
+            case ground_sprite:
+                squere_sprite = grass_sprite;
+                break;
+
+            case grass_sprite:
+                squere_sprite = water_sprite;
+                break;
+
+            case water_sprite:
+                squere_sprite = ground_sprite;
+                break;
+
+            default:
+                squere_sprite = ground_sprite;
+                break;
         }
     }
 
@@ -242,7 +268,7 @@ sprite.set_sprites().then(() => {
             y = 0
         }
 
-        board.setGrid(x, y, (new Rect(x * rectW, y * rectH, rectW, rectH, ground_sprite, camera)), player.pos);
+        board.setGrid(x, y, (new Rect(x * rectW, y * rectH, rectW, rectH, squere_sprite, camera)), player.pos);
     }
 
 

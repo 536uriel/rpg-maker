@@ -25,6 +25,7 @@ export class Sprite {
     async set_sprites() {
         await this.set_ground_sprite();
         await this.set_grass_sprite();
+        await this.set_water_sprite();
         try {
             await this.set_player_sprites();
 
@@ -48,6 +49,11 @@ export class Sprite {
     async set_grass_sprite() {
         const can_img = await this.loadSprite(SITE_URL + '/assets/sprites.png', 0, 2, this.size_w, this.size_h);
         this.sprites.set('grass', can_img);
+    }
+
+    async set_water_sprite() {
+        const can_img = await this.loadSprite(SITE_URL + '/assets/sprites.png', 4, 1, this.size_w, this.size_h);
+        this.sprites.set('water', can_img);
     }
 
     async set_sword_sprite() {
