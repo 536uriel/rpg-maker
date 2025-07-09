@@ -22,61 +22,49 @@ export function stopMoveWhenCollide(subject, obstacles, x, y, camera, canvas, sp
 
     const water = sprite.sprites.get('water');
 
+    intersection(subject, obstacles, obstacle => {
 
-    //if subject move to right
-    if (x > 0) {
+        if (obstacle.sprite != water) {
+            //if subject move to right
+            if (x > 0) {
 
-        intersection(subject, obstacles, obstacle => {
-
-            if (subject.rp > obstacle.lp) {
-                //תקן לסוף השמאל
-                if (obstacle.sprite != water) {
+                if (subject.rp > obstacle.lp) {
+                    //תקן לסוף השמאל
                     subject.rp = obstacle.lp;
-                } 
-            }
-
-
-
-        });
-    } else if (x < 0) {
-        intersection(subject, obstacles, obstacle => {
-            if (subject.lp < obstacle.rp) {
-                //תקן לסוף הימין
-                if (obstacle.sprite != water) {
-                    subject.lp = obstacle.rp;
                 }
-            }
 
-        });
-    }
+            } else if (x < 0) {
+                //תקן לסוף הימין
+                subject.lp = obstacle.rp;
+            }
+        }
+
+    });
 
 
     subject.pos.y += y
 
+    intersection(subject, obstacles, obstacle => {
 
+        if (obstacle.sprite != water) {
 
-    if (y > 0) {
-        intersection(subject, obstacles, obstacle => {
-            if (subject.bp > obstacle.tp) {
-                //תקן לסוף הלמעלה
-                if (obstacle.sprite != water) {
+            if (y > 0) {
+
+                if (subject.bp > obstacle.tp) {
+                    //תקן לסוף הלמעלה
                     subject.bp = obstacle.tp;
                     subject.jump = false;
                 }
-            }
 
-        });
-    } else if (y < 0) {
-        intersection(subject, obstacles, obstacle => {
-            if (subject.tp < obstacle.bp) {
-                //תקן לסוף הלמטה
-                if (obstacle.sprite != water) {
+            } else if (y < 0) {
+                if (subject.tp < obstacle.bp) {
+                    //תקן לסוף הלמטה
                     subject.tp = obstacle.bp;
                 }
             }
+        }
 
-        });
-    }
+    });
 
     camera.x = subject.pos.x - canvas.width / 2;
     camera.y = -(subject.pos.y - canvas.height / 2);
